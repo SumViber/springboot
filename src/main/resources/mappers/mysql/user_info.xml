@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace = "com.sumvibe.springboot.dao.mysql.UserInfoDao">
+    <resultMap id="userMap" type="com.sumvibe.springboot.domain.User">
+        <id property="id" column="user_id"/>
+        <!-- 类的普通属性对应表的普通字段使用result标签 -->
+        <result property="name" column="user_name"/>
+        <result property="age" column="user_age"/>
+        <result property="sex" column="user_sex"/>
+        <result property="phone" column="user_phone"/>
+    </resultMap>
+
+    <select id="getUsers" resultMap="userMap">
+        select * from user_info
+    </select>
+
+    <select id="getUserById" parameterType="java.lang.String" resultMap="userMap">
+        select * from user_info where user_id = #{id}
+    </select>
+
+<!-- useGeneratedKeys自动使用主键   -->
+    <insert id="addUser" parameterType="com.sumvibe.springboot.domain.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user_info(user_name, user_age, user_sex, user_phone) values (#{name},#{age},#{sex},#{phone})
+    </insert>
+
+    <delete id="batchDelUser">
+        delete from user_info where user_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateUser">
+        update user_info t
+            <set>
+                <if test="name != '' and name !=null">
+                    t.user_name=#{name}
+                </if>
+                <if test="age != '' and age !=null">
+                    ,t.user_age=#{age}
+                </if>
+                <if test="sex != '' and sex !=null">
+                    ,t.user_sex=#{sex}
+                </if>
+                <if test="phone != '' and phone !=null">
+                    ,t.user_phone=#{phone}
+                </if>
+            </set>
+            where  t.user_id = #{id}
+    </update>
+    <!--批量插入-->
+    <insert id="batchAddUser">
+        insert into user_info(USER_NAME,USER_AGE,USER_SEX,USER_PHONE) values
+        <foreach collection="list" item="user" separator=",">
+            (#{user.name},#{user.age},#{user.sex},#{user.phone})
+        </foreach>
+    </insert>
+
+<!--批量删除-->
+    <delete id="batchDelUsers">
+        delete from user_info where user_id in
+      <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item.id}
+      </foreach>
+    </delete>
+
+    <select id="getUserName" parameterType="string" resultType="string" fetchSize="1000">
+        select user_name from user_info where user_id = #{id}
+    </select>
+
+</mapper>
+
