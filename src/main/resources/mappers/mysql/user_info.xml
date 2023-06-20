@@ -4,6 +4,8 @@
 
 
 <mapper namespace = "com.sumvibe.springboot.dao.mysql.UserInfoDao">
+
+
     <resultMap id="userMap" type="com.sumvibe.springboot.domain.User">
         <id property="id" column="user_id"/>
         <!-- 类的普通属性对应表的普通字段使用result标签 -->

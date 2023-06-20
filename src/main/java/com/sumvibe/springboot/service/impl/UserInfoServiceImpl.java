@@ -54,8 +54,6 @@ public class UserInfoServiceImpl implements UserInfoService{
         map.put("sex", sex);
         map.put("phone", phone);
         int i = userInfoDao.updateUser(map);
-            int j= 1/-0;
-
         return i;
     }
 

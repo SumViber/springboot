@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -23,6 +22,7 @@ class SpringbootApplicationTests {
 
     @Test
     void contextLoads() {
+
         ArrayList<UserDo> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             String s = UUID.randomUUID().toString().replaceAll("-", "");
@@ -75,4 +75,12 @@ class SpringbootApplicationTests {
         System.out.println("单独插入一个用户结果："+i);
     }
 
+    @Test
+    void testMain() {
+        // Setup
+        // Run the test
+        SpringbootApplication.main(new String[]{"args"});
+
+        // Verify the results
+    }
 }

@@ -15,7 +15,6 @@ import java.awt.Color;
 import java.io.FileOutputStream;
 import java.util.List;
 
-@RestController
 public class PoiToExcel {
 
     @Resource

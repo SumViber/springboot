@@ -3,13 +3,15 @@ package com.sumvibe.springboot.controller;
 import com.sumvibe.springboot.domain.*;
 import com.sumvibe.springboot.service.UserInfoService;
 import com.sumvibe.springboot.utils.MailSplitUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
+@Api(tags = "用户信息操作接口")
 @Slf4j
 @RestController
 public class UserInfoController {
@@ -17,16 +19,16 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
+    @ApiOperation("获取所有用户的基本信息")
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public List<User> getUsers() throws Exception {
         List<User> users = userInfoService.getUsers();
         System.out.println(users.toString());
         return users;
     }
-
+    @ApiOperation("新增单个用户")
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public DBResponse addUser(User user) {
-
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "未知错误");
         int i = userInfoService.addUser(user);
         if (i == 1) {
@@ -36,7 +38,7 @@ public class UserInfoController {
         }
         return db;
     }
-
+    @ApiOperation("批量删除用户")
     @RequestMapping(value = "/batchDelUser", method = RequestMethod.GET)
     public DBResponse batchDelUser(String ids) {
         if (log.isInfoEnabled()) {
@@ -64,7 +66,7 @@ public class UserInfoController {
         return db;
     }
 
-
+    @ApiOperation("更新用户信息")
     @GetMapping("/updateUser")
     public DBResponse updateUser(String id, String name, String age, String sex, String phone) {
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "更新失败");
@@ -77,7 +79,7 @@ public class UserInfoController {
         }
         return db;
     }
-
+    @ApiOperation("通过用户ID查询用户信息")
     @GetMapping("/getUserById")
     public DBResponse getUserById(String id) {
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
@@ -90,6 +92,7 @@ public class UserInfoController {
         return db;
     }
 
+    @ApiOperation("通过操作类型操作用户")
     /**
      * 批量新增用户数据
      */
