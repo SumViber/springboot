@@ -2,12 +2,13 @@ package com.sumvibe.springboot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import net.bytebuddy.asm.Advice;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Accessors(chain = true) // 开启链式设置数值
 public class User {
+
     private String id;
     private String name;
     private Integer age;

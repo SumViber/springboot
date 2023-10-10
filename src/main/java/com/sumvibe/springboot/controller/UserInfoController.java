@@ -92,6 +92,20 @@ public class UserInfoController {
         return db;
     }
 
+    @ApiOperation("Post通过用户ID查询用户信息")
+    @RequestMapping(value = "getCusById",method = RequestMethod.POST)
+    public DBResponse getCusById(String id) {
+        System.out.println("接受到到参数 ID 为："+id);
+        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
+        User user = userInfoService.getUserById(id);
+        if (user != null) {
+            db.setRetCode(StatusCode.RET_SUCCESS);
+            db.setRetMsg("查询用户成功");
+            db.setData(user);
+        }
+        return db;
+    }
+
     @ApiOperation("通过操作类型操作用户")
     /**
      * 批量新增用户数据

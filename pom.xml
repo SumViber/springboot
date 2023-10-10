@@ -26,6 +26,12 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
         </dependency>
+        <!--mybatis-flex-->
+<!--        <dependency>-->
+<!--            <groupId>com.mybatis-flex</groupId>-->
+<!--            <artifactId>mybatis-flex-spring-boot-starter</artifactId>-->
+<!--            <version>1.5.5</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -71,8 +77,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
-        <!---->
-        <!--clid-->
+        <!--clid -->
         <dependency>
             <groupId>com.github.f4b6a3</groupId>
             <artifactId>ulid-creator</artifactId>
@@ -109,6 +114,12 @@
             <artifactId>junit-jupiter-params</artifactId>
             <version>5.2.0</version>
             <scope>test</scope>
+        </dependency>
+        <!--引入hutool工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.16</version>
         </dependency>
     </dependencies>
     <build>

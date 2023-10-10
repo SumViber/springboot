@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.sumvibe.springboot.dao.mysql", sqlSessionTemplateRef = "primarySqlSessionTemplate")
 public class DataSourceConfig1 {
     @Bean(name = "primaryDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.mysql")
+    @ConfigurationProperties(prefix = "spring.datasource")
     @Primary
     public DataSource testDataSource() {
         return DataSourceBuilder.create().build();
@@ -45,5 +45,4 @@ public class DataSourceConfig1 {
     public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("primarySqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
 }

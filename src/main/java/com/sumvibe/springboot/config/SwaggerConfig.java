@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.sumvibe.springboot.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,8 +43,6 @@ public class SwaggerConfig {
                 // 指定路径处理PathSelectors.any()代表所有的路径
                 .paths(PathSelectors.regex("/error").negate())
                 .build();
-         //请求URL都会加上/project前缀
-        //.pathMapping("/project");
     }
 
     private ApiInfo apiInfo() {

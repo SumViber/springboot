@@ -3,10 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>首页页面</title>
+    <script src="../static/js/jquery-3.7.0.js"></script>
+    <script>
+        // 原生的 get 与 post 请求
+        function sendGet() {
+            //ajax 请求
+            let xmlHttpRequest = new XMLHttpRequest();
+            //xmlHttpRequest.open("GET","http://localhost:8080/receiveReq",true);
+            xmlHttpRequest.open("GET", "http://localhost:8080/getUsers", true);
+            xmlHttpRequest.send()
+            // 判断成功与否
+            xmlHttpRequest.onreadystatechange = function () {
+                if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+                    alert(xmlHttpRequest.responseText)
+                }
+            }
+        }
+
+        function sendPost() {
+            //ajax 请求
+            let xmlHttpRequest = new XMLHttpRequest();
+            // 创建连接
+            xmlHttpRequest.open("POST", "http://localhost:8080/getCusById", true);
+            // 设置请求头
+            //xmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+            xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+            // 发送数据
+            xmlHttpRequest.send("id=30")
+            // 判断成功与否
+            xmlHttpRequest.onreadystatechange = function () {
+                if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+                    alert(xmlHttpRequest.responseText)
+                }
+            }
+        }
+
+        // 使用jquery发送请求
+        function sendJGet() {
+            // url 回调函数
+            // $.get("http://localhost:8080/getUsers", function (data, status) {
+            //     alert("status: "+status+", data: "+data)
+            // })
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/getUserById",
+                data: {
+                    id:30
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        }
+
+        function sendJPost() {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/getCusById",
+                data: {
+                    id:29
+                },
+                dataType:"json",
+                success: function (data) {
+                     console.log(data)
+                    //alert(data)
+                }
+            })
+        }
+
+
+    </script>
 </head>
 <body>
-    <a href="http://www.baidu.com">百度一下</a>
-<p>你是<br>许苏<br>费</p>
-<p>zheshi</p>
+<button onclick="sendGet()">发送Get请求</button>
+<button onclick="sendPost()">发送Post请求</button>
+<br>
+<p>
+    <button onclick="sendJGet()">Jquery发送Get请求</button>
+    <button onclick="sendJPost()">Jquery发送Post请求</button>
+</p>
+
 </body>
 </html>

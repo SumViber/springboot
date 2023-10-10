@@ -7,14 +7,14 @@ import java.util.*;
 
 public class DataTransfer {
     // 标准字节数
-    private final static int size = 20;
+    private final static int size = 400;
     // 交易总包数
-    private final static int totalTransNum = 20;
+    private final static int totalTransNum = 208;
 
     public static void main(String[] args) {
         StringBuilder sbu = new StringBuilder();
         for (int i = 0; i < 52; i++) {
-            sbu.append("<tr><td>java"+i+"</td></tr>");
+            sbu.append("<tr><td>java" + i + "</td></tr>");
         }
         String str = sbu.toString();
         int strLength = str.getBytes().length;
@@ -52,9 +52,9 @@ public class DataTransfer {
         int tempSize = 0;
         // 0 - 012  3   1-345 6    2-678  9 3-9
         HashMap<Object, Object> linkedMap = new LinkedHashMap<>();
-        for (int i = 0; i < totalCount;i++) {
+        for (int i = 0; i < totalCount; i++) {
             StringBuilder sb = new StringBuilder();
-            for (int j = i*perNum; j < ((i+1)*perNum > list.size()?list.size():(i+1)*perNum); j++) {
+            for (int j = i * perNum; j < ((i + 1) * perNum > list.size() ? list.size() : (i + 1) * perNum); j++) {
                 sb.append(list.get(j));
             }
             linkedMap.put("str" + i, sb.toString());
@@ -63,7 +63,7 @@ public class DataTransfer {
         Iterator<Map.Entry<Object, Object>> iterator = linkedMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Object, Object> next = iterator.next();
-            System.out.println("map key: "+next.getKey()+", map value:"+next.getValue());
+            System.out.println("map key: " + next.getKey() + ", map value:" + next.getValue());
         }
     }
 }

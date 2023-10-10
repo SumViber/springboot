@@ -1,5 +1,4 @@
 package com.sumvibe.springboot;
-
 import com.sumvibe.springboot.dao.mysql.UserInfoDao;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
@@ -7,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +16,7 @@ class SpringbootApplicationTests {
 
     @Autowired
     private UserInfoDao userInfoDao;
+
 
 
     @Test
@@ -75,12 +74,5 @@ class SpringbootApplicationTests {
         System.out.println("单独插入一个用户结果："+i);
     }
 
-    @Test
-    void testMain() {
-        // Setup
-        // Run the test
-        SpringbootApplication.main(new String[]{"args"});
 
-        // Verify the results
-    }
 }
