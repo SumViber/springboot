@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <script src="../static/js/jquery-3.7.0.js"></script>
+    <script>
+        // 获取用户信息分页
+        function getUserByPage(pageNum,pageSize) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/getUserByPage",
+                data: {
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                },
+                success: function (data) {
+                    console.log(data)
+                    alert(data.getAll())
+                }
+            })
+        }
+    </script>
+
+
+</head>
+<body>
+<button onclick="getUserByPage(1,5)">客户信息</button>
+</body>
+</html>

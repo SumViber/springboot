@@ -142,9 +142,5 @@ public class Test02 {
         String str = "{\"userId\":1,\"userName\":\"jay\",\"userAge\":20,\"userSex\":\"nan\",\"userPhone\":\"18827718\"}";
         UserInfo bean = JSONUtil.toBean( str, UserInfo.class);
         System.out.println(bean.getUserSex());
-
-
-
-
     }
 }

@@ -23,11 +23,11 @@ class SpringbootApplicationTests {
     void contextLoads() {
 
         ArrayList<UserDo> users = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             String s = UUID.randomUUID().toString().replaceAll("-", "");
             log.info("本次随机数用户ID 为：" + s);
             UserDo user = new UserDo();
-            user.setName("summer");
+            user.setName("jay"+i);
             user.setSex("男");
             user.setPhone("111");
             user.setAge(12);
