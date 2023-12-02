@@ -24,9 +24,7 @@ public class UserInfoController {
     @ApiOperation("获取所有用户的基本信息")
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public List<User> getUsers() throws Exception {
-        List<User> users = userInfoService.getUsers();
-        System.out.println(users.toString());
-        return users;
+        return userInfoService.getUsers();
     }
 
     @ApiOperation("新增单个用户")
@@ -165,30 +163,27 @@ public class UserInfoController {
         return db;
     }
 
+    @ApiOperation("批量删除用户")
     @GetMapping("/batchDelUsers")
     public DBResponse batchDelUsers() {
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "批量删除失败");
 
         List<User> users = userInfoService.getUsers();
-        System.out.println(users.size() + "---------");
-        String[] s = {};
-        ArrayList<Object> list = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
+        log.info("获取到用户的数量为：" + users.size());
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
             list.add(users.get(i).getId());
         }
-
-        String[] strings = list.toArray(s);
-        List<String> strings1 = Arrays.asList(strings);
-        System.out.println("数组元素为：" + strings1.toString());
+        log.info("删除的用户ID集合为："+list);
         int i = 0;
         try {
-            i = userInfoService.batchDelUser(strings1);
+            i = userInfoService.batchDelUser(list);
+            log.info("删除数据结果为：" + i);
+            db.setRetCode(StatusCode.RET_SUCCESS);
+            db.setRetMsg("删除成功");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        db.setRetCode(StatusCode.RET_SUCCESS);
-        db.setRetMsg("删除成功");
         return db;
     }
 
@@ -215,13 +210,13 @@ public class UserInfoController {
      * 使用Java8 skip 与 limit 实现分页
      * 1 5
      */
-
+    @ApiOperation(value = "分页查询用户信息", notes = "分页查询用户信息")
     @GetMapping("/getUserByPage")
-    public DBResponse getUserByPage(Integer pageNum, Integer pageSize) {
+    public DBResponse getUserByPage(@RequestParam Integer pageNum, Integer pageSize) {
         DBResponse dbResponse = new DBResponse(1, "未知异常");
 
         // 查询所有用户信息
-        List<User> users = userInfoService.getUsers();
+        List<User> users = userInfoService.getUsers()           ;
         // 1-0(0-4) 2-5(5-9) 3-10
         int startIndex = (pageNum - 1) * pageSize;
         List<User> pageList = users.stream().skip(startIndex).limit(pageSize).collect(Collectors.toList());
