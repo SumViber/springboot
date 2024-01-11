@@ -141,7 +141,7 @@ public class UserInfoController {
             }
         }
         // 新增数据
-        if (addList != null && addList.size() > 0) {
+        if (addList.size() > 0) {
             int i = userInfoService.batchAddUser(addList);
             if (i != 0) {
                 log.info("插入数据结果为：" + i);
@@ -152,7 +152,7 @@ public class UserInfoController {
         }
 
         // 删除数据
-        if (delList != null && delList.size() > 0) {
+        if (delList.size() > 0) {
             int i = userInfoService.batchDelUsers(delList);
             if (i > 0) {
                 log.info("删除数据结果为：" + i);
@@ -192,7 +192,7 @@ public class UserInfoController {
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
         StringBuilder sbu = new StringBuilder();
         for (int i = 0; i < 80; i++) {
-            sbu.append("<tr><td>java" + i + "</td></tr>");
+            sbu.append("<tr><td>java").append(i).append("</td></tr>");
         }
         String str = sbu.toString();
 
