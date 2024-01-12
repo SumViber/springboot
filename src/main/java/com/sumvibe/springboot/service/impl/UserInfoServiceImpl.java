@@ -47,6 +47,12 @@ public class UserInfoServiceImpl implements UserInfoService{
         int i = userInfoDao.batchDelUser(ids);
         return i;
     }
+
+    @Override
+    public int delUserById(String id) {
+        return userInfoDao.delUserById(id);
+    }
+
     @Transactional(rollbackFor = ArithmeticException.class)
     @Override
     public int updateUser(String id, String name, String age, String sex, String phone) {

@@ -2,6 +2,7 @@ package com.sumvibe.springboot.service;
 
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface UserInfoService {
     int addUser(User user);
 
     int batchDelUser(List<String> ids);
+
+    int delUserById(String id);
 
     int updateUser(String id,String name,String age,String sex,String phone);
 

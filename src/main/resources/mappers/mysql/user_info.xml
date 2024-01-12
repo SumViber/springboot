@@ -34,6 +34,11 @@
             #{id}
         </foreach>
     </delete>
+
+    <delete id="delUserById"  parameterType="string">
+        delete from user_info where user_id = #{id}
+    </delete>
+
     <update id="updateUser">
         update user_info t
             <set>

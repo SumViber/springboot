@@ -30,6 +30,7 @@ public interface UserInfoDao {
      * @return
      */
     int batchDelUser(List<String> ids);
+    int delUserById(@Param("id") String id);
 
     int updateUser(Map<String,Object> params);
 

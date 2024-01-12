@@ -69,7 +69,21 @@ public class UserInfoController {
         return db;
     }
 
+@ApiOperation(value =  "根据用户ID删除用户",notes = "根据用户ID删除用户" )
+@GetMapping("/delUserById")
+    public DBResponse delUserById(String id) {
+        DBResponse dbResponse = new DBResponse(StatusCode.RET_ERROR, "未知错误");
+        int i = userInfoService.delUserById(id);
+        if (i == 1) {
+            dbResponse.setRetMsg("删除成功");
+            dbResponse.setRetCode(StatusCode.RET_SUCCESS);
+        } else {
+            dbResponse.setRetMsg("删除失败");
+            dbResponse.setRetCode(StatusCode.RET_ERROR);
 
+        }
+        return dbResponse;
+    }
 
     @ApiOperation("通过id批量删除用户")
     @RequestMapping(value = "/batchDelUser", method = RequestMethod.GET)
