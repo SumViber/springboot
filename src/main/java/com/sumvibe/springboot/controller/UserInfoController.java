@@ -5,11 +5,13 @@ import com.sumvibe.springboot.service.UserInfoService;
 import com.sumvibe.springboot.utils.MailSplitUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Name;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,33 @@ public class UserInfoController {
         return userInfoService.getUsers();
     }
 
+    @ApiOperation("通过用户ID查询用户信息")
+    @GetMapping("/getUserById")
+    public DBResponse getUserById(String id) {
+        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
+        User user = userInfoService.getUserById(id);
+        if (user != null) {
+            db.setRetCode(StatusCode.RET_SUCCESS);
+            db.setRetMsg("查询用户成功");
+            db.setData(user);
+        }
+        return db;
+    }
+
+    @ApiOperation("Post通过用户ID查询用户信息")
+    @RequestMapping(value = "getCusById", method = RequestMethod.POST)
+    public DBResponse getCusById(String id) {
+        System.out.println("接受到到参数 ID 为：" + id);
+        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
+        User user = userInfoService.getUserById(id);
+        if (user != null) {
+            db.setRetCode(StatusCode.RET_SUCCESS);
+            db.setRetMsg("查询用户成功");
+            db.setData(user);
+        }
+        return db;
+    }
+
     @ApiOperation("新增单个用户")
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public DBResponse addUser(User user) {
@@ -40,7 +69,9 @@ public class UserInfoController {
         return db;
     }
 
-    @ApiOperation("批量删除用户")
+
+
+    @ApiOperation("通过id批量删除用户")
     @RequestMapping(value = "/batchDelUser", method = RequestMethod.GET)
     public DBResponse batchDelUser(String ids) {
         if (log.isInfoEnabled()) {
@@ -67,6 +98,29 @@ public class UserInfoController {
         }
         return db;
     }
+    @ApiOperation("批量删除所有用户")
+    @GetMapping("/batchDelUsers")
+    public DBResponse batchDelUsers() {
+        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "批量删除失败");
+
+        List<User> users = userInfoService.getUsers();
+        log.info("获取到用户的数量为：" + users.size());
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            list.add(users.get(i).getId());
+        }
+        log.info("删除的用户ID集合为："+list);
+        int i = 0;
+        try {
+            i = userInfoService.batchDelUser(list);
+            log.info("删除数据结果为：" + i);
+            db.setRetCode(StatusCode.RET_SUCCESS);
+            db.setRetMsg("删除成功");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return db;
+    }
 
     @ApiOperation("更新用户信息")
     @GetMapping("/updateUser")
@@ -77,33 +131,6 @@ public class UserInfoController {
         if (i == 1 && user != null) {
             db.setRetCode(StatusCode.RET_SUCCESS);
             db.setRetMsg("更新用户信息成功");
-            db.setData(user);
-        }
-        return db;
-    }
-
-    @ApiOperation("通过用户ID查询用户信息")
-    @GetMapping("/getUserById")
-    public DBResponse getUserById(String id) {
-        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
-        User user = userInfoService.getUserById(id);
-        if (user != null) {
-            db.setRetCode(StatusCode.RET_SUCCESS);
-            db.setRetMsg("查询用户成功");
-            db.setData(user);
-        }
-        return db;
-    }
-
-    @ApiOperation("Post通过用户ID查询用户信息")
-    @RequestMapping(value = "getCusById", method = RequestMethod.POST)
-    public DBResponse getCusById(String id) {
-        System.out.println("接受到到参数 ID 为：" + id);
-        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
-        User user = userInfoService.getUserById(id);
-        if (user != null) {
-            db.setRetCode(StatusCode.RET_SUCCESS);
-            db.setRetMsg("查询用户成功");
             db.setData(user);
         }
         return db;
@@ -141,7 +168,7 @@ public class UserInfoController {
             }
         }
         // 新增数据
-        if (addList.size() > 0) {
+        if (!addList.isEmpty()) {
             int i = userInfoService.batchAddUser(addList);
             if (i != 0) {
                 log.info("插入数据结果为：" + i);
@@ -152,7 +179,7 @@ public class UserInfoController {
         }
 
         // 删除数据
-        if (delList.size() > 0) {
+        if (!delList.isEmpty()) {
             int i = userInfoService.batchDelUsers(delList);
             if (i > 0) {
                 log.info("删除数据结果为：" + i);
@@ -162,50 +189,6 @@ public class UserInfoController {
         }
         return db;
     }
-
-    @ApiOperation("批量删除用户")
-    @GetMapping("/batchDelUsers")
-    public DBResponse batchDelUsers() {
-        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "批量删除失败");
-
-        List<User> users = userInfoService.getUsers();
-        log.info("获取到用户的数量为：" + users.size());
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            list.add(users.get(i).getId());
-        }
-        log.info("删除的用户ID集合为："+list);
-        int i = 0;
-        try {
-            i = userInfoService.batchDelUser(list);
-            log.info("删除数据结果为：" + i);
-            db.setRetCode(StatusCode.RET_SUCCESS);
-            db.setRetMsg("删除成功");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return db;
-    }
-
-    @GetMapping("/getTransInfo")
-    public DBResponse getTransInfo() {
-        DBResponse db = new DBResponse(StatusCode.RET_ERROR, "查询失败");
-        StringBuilder sbu = new StringBuilder();
-        for (int i = 0; i < 80; i++) {
-            sbu.append("<tr><td>java").append(i).append("</td></tr>");
-        }
-        String str = sbu.toString();
-
-        Map<String, Object> map = MailSplitUtil.dataConvert1(str);
-        log.info("map.size" + map.size());
-        if (map != null) {
-            db.setRetCode(StatusCode.RET_SUCCESS);
-            db.setRetMsg("查询交易成功！");
-            db.setData(map);
-        }
-        return db;
-    }
-
     /**
      * 使用Java8 skip 与 limit 实现分页
      * 1 5
@@ -214,7 +197,6 @@ public class UserInfoController {
     @GetMapping("/getUserByPage")
     public DBResponse getUserByPage(@RequestParam Integer pageNum, Integer pageSize) {
         DBResponse dbResponse = new DBResponse(1, "未知异常");
-
         // 查询所有用户信息
         List<User> users = userInfoService.getUsers()           ;
         // 1-0(0-4) 2-5(5-9) 3-10
@@ -226,6 +208,37 @@ public class UserInfoController {
         dbResponse.setRetMsg("分页数据查询成功！");
         return dbResponse;
     }
+    @ApiOperation(value = "批量更新用户信息", notes = "批量更新用户信息")
+    @GetMapping("/batchUpdateUsers")
+    public DBResponse batchUpdateUsers(@ApiParam(value = "name",required = true) @RequestParam(value = "name",defaultValue = "") String name,
+                                       @ApiParam(value = "phone") @RequestParam(value = "phone",defaultValue = "166") String phone,
+                                       @ApiParam(value = "ids",required = true) @RequestParam(value = "ids") String ids){
+        DBResponse dbResponse = new DBResponse(StatusCode.RET_ERROR, "更新失败");
+        log.info("input params name:{},phone:{},ids:{}",name,phone,ids);
+        ArrayList<User> updatedUsers = new ArrayList<>();
+        try {
 
+            int i = userInfoService.batchUpdateUsers(name, phone, ids);
+            log.info("更新结果为："+i);
+            if (i > 0) {
+                // 更新成功并返回更新的数据
+                for (String id : Arrays.asList(ids.split(","))) {
+                    User userById = userInfoService.getUserById(id);
+                    updatedUsers.add(userById);
+                }
+                dbResponse.setRetCode(StatusCode.RET_SUCCESS);
+                dbResponse.setRetMsg("更新成功"+i+"条数据！");
+                dbResponse.setData(updatedUsers);
+            } else {
+                dbResponse.setRetCode(StatusCode.RET_ERROR);
+                dbResponse.setRetMsg("更新失败");
+            }
+        } catch (Exception e) {
+            dbResponse.setRetCode(StatusCode.RET_ERROR);
+            dbResponse.setRetMsg("更新异常，异常信息为："+e.getMessage());
+        }
+        log.info("返回前端结果为："+dbResponse);
+        return dbResponse;
+    }
 
 }

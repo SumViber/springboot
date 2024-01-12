@@ -35,4 +35,6 @@ public interface UserInfoService {
     // 测试异步方法
     void testAsync() throws InterruptedException;
 
+    int batchUpdateUsers(String name,String phone,String ids);
+
 }

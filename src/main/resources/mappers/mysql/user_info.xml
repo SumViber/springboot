@@ -52,6 +52,24 @@
             </set>
             where  t.user_id = #{id}
     </update>
+
+    <!--批量更新-->
+    <update id="batchUpdateUsers">
+        update user_info t
+         <set>
+             <if test="name != '' and name !=null">
+                 t.user_name=#{name}
+             </if>
+             <if test="phone != '' and phone !=null">
+                 ,t.user_phone=#{phone}
+             </if>
+         </set>
+        where t.user_id in
+         <foreach collection="list" item="id" separator="," open="(" close=")">
+             #{id}
+         </foreach>
+    </update>
+
     <!--批量插入-->
     <insert id="batchAddUser">
         insert into user_info(USER_NAME,USER_AGE,USER_SEX,USER_PHONE) values

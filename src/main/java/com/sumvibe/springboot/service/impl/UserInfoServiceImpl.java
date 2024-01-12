@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +80,13 @@ public class UserInfoServiceImpl implements UserInfoService{
         //线程休眠2秒
         Thread.sleep(2000);
         log.info("线程【{}】执行结束le...",Thread.currentThread().getName());
+    }
+
+    @Override
+    public int batchUpdateUsers(String name, String phone, String ids) {
+        // 处理ids
+        List<String> list = Arrays.asList(ids.split(","));
+        return userInfoDao.batchUpdateUsers(name, phone, list);
     }
 
 }

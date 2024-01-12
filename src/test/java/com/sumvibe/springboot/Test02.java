@@ -31,42 +31,42 @@ import java.util.Random;
 @Slf4j
 public class Test02 {
 
-    @Test
-    public void test() {
-        int i = 0;
-        String str = "";
-//        do {
+//    @Test
+//    public void test() {
+//        int i = 0;
+//        String str = "";
+////        do {
+////            str = getStr();
+////            System.out.println(str);
+////            i++;
+////            System.out.println(i);
+////        } while (!str.contains("."));
+//        for (int j = 0; j < 1000000; j++) {
 //            str = getStr();
-//            System.out.println(str);
 //            i++;
-//            System.out.println(i);
-//        } while (!str.contains("."));
-        for (int j = 0; j < 1000000; j++) {
-            str = getStr();
-            i++;
-            System.out.println("第 "+i+"次输出字符串："+str);
-            System.out.println("-------------------");
-        }
-    }
+//            System.out.println("第 "+i+"次输出字符串："+str);
+//            System.out.println("-------------------");
+//        }
+//    }
 
-    public static String getStr() {
-        String orderNo;
-        String trandNo;
-        int j = 0;
-        do {
-            trandNo = String.valueOf((Math.random() * 9 + 1));
-            orderNo = trandNo.substring(trandNo.length() - 12);
-            System.out.println("原始trandNo: " + trandNo);
-            System.out.println("trandNo原始长度："+trandNo.length());
-            j++;
-        } while (orderNo.contains("."));
-        //trandNo = String.valueOf((Math.random() * 9 + 1));
-        String sdf = new SimpleDateFormat("yyMMdd").format(new Date());
-        System.out.println("最终trandNo: " + trandNo);
-        System.out.println("trandNo最终长度：" + trandNo.length());
-        System.out.println("循环次数j："+j);
-        return sdf + orderNo;
-    }
+//    public static String getStr() {
+//        String orderNo;
+//        String trandNo;
+//        int j = 0;
+//        do {
+//            trandNo = String.valueOf((Math.random() * 9 + 1));
+//            orderNo = trandNo.substring(trandNo.length() - 12);
+//            System.out.println("原始trandNo: " + trandNo);
+//            System.out.println("trandNo原始长度："+trandNo.length());
+//            j++;
+//        } while (orderNo.contains("."));
+//        //trandNo = String.valueOf((Math.random() * 9 + 1));
+//        String sdf = new SimpleDateFormat("yyMMdd").format(new Date());
+//        System.out.println("最终trandNo: " + trandNo);
+//        System.out.println("trandNo最终长度：" + trandNo.length());
+//        System.out.println("循环次数j："+j);
+//        return sdf + orderNo;
+//    }
 
     public static Long getUUIDNumber() {
         String orderNo;

@@ -3,6 +3,7 @@ package com.sumvibe.springboot.dao.mysql;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -47,4 +48,15 @@ public interface UserInfoDao {
     int batchDelUsers(List<UserDo> list);
 
     String getUserName(String id);
+
+    /**
+     * 批量更新用户信息
+     * @param name
+     * @param phone
+     * @param list
+     * @return
+     */
+    int batchUpdateUsers(@Param("name") String name,
+                         @Param("phone") String phone,
+                         @Param("list") List<String> list);
 }
