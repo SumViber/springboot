@@ -27,14 +27,14 @@ public class UserTask {
 
     @Autowired
     private UserInfoService userInfoService;
-    @Async
-    @Scheduled(cron = "0/5 * * * * ?")
+    //@Async
+   @Scheduled(cron = "0/5 * * * * ?")
     public void userTask(){
         log.info(dateFormat.format(new Date())+" 当前库中数据数量: {}", userInfoService.getUsers().size());
     }
 
     @Async
-    @Scheduled(cron = "*/2 * * * * ?")
+   // @Scheduled(cron = "*/2 * * * * ?")
     public void usersTask() throws InterruptedException {
         List<User> users = userInfoService.getUsers();
         for (User user : users) {
