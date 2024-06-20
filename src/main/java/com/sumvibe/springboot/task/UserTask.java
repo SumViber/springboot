@@ -28,7 +28,7 @@ public class UserTask {
     @Autowired
     private UserInfoService userInfoService;
     //@Async
-   @Scheduled(cron = "0/5 * * * * ?")
+   //@Scheduled(cron = "0/5 * * * * ?")
     public void userTask(){
         log.info(dateFormat.format(new Date())+" 当前库中数据数量: {}", userInfoService.getUsers().size());
     }

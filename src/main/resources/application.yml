@@ -1,9 +1,10 @@
 spring:
   datasource:
-      jdbc-url: jdbc:mysql://localhost:3306/summer?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/summer?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: root
       password: root1234
       driver-class-name: com.mysql.cj.jdbc.Driver
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -11,6 +12,11 @@ spring:
 # swagger
 swagger:
   enabled: true
+
+# mapper文件的扫描路径
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+
 
 
 

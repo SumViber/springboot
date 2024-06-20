@@ -19,8 +19,8 @@ import springfox.documentation.spring.web.plugins.Docket;
  * @author zjt
  * @date 2022-07-15 16:04:24
  * @description: swagger3
- * 1 默认访问路径http://localhost:8080/swagger-ui/index.html
- * 2 接口文档地址http://localhost:8080/doc.html
+ * 1 默认访问路径 http://localhost:8080/swagger-ui/index.html
+ * 2 接口文档地址 http://localhost:8080/doc.html
  */
 @Configuration
 @EnableOpenApi

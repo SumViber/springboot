@@ -2,7 +2,6 @@ package com.sumvibe.springboot.service;
 
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

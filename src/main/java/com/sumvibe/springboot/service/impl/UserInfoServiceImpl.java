@@ -1,6 +1,6 @@
 package com.sumvibe.springboot.service.impl;
 
-import com.sumvibe.springboot.dao.mysql.UserInfoDao;
+import com.sumvibe.springboot.dao.UserInfoDao;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import com.sumvibe.springboot.service.UserInfoService;
@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j

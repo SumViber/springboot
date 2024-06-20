@@ -1,5 +1,5 @@
 package com.sumvibe.springboot;
-import com.sumvibe.springboot.dao.mysql.UserInfoDao;
+import com.sumvibe.springboot.dao.UserInfoDao;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import lombok.extern.slf4j.Slf4j;

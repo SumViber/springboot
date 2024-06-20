@@ -1,14 +1,16 @@
-package com.sumvibe.springboot.dao.mysql;
+package com.sumvibe.springboot.dao;
 
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
+@Component
 public interface UserInfoDao {
     /**
      * 查询数据

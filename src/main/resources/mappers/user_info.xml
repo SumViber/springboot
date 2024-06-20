@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace = "com.sumvibe.springboot.dao.mysql.UserInfoDao">
+<mapper namespace = "com.sumvibe.springboot.dao.UserInfoDao">
 
 
     <resultMap id="userMap" type="com.sumvibe.springboot.domain.User">
