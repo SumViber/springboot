@@ -1,7 +1,6 @@
 package com.sumvibe.springboot.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -113,26 +112,26 @@ public class Tools {
      * @return 浏览器支持的编码方式的字符串
      * @throws UnsupportedEncodingException
      */
-    public static String getCharacterEncodingStr(HttpServletRequest request, String name) throws UnsupportedEncodingException {
-        //获得请求头中的User-Agent
-        String agent = request.getHeader("User-Agent");
-        String filenameEncoder;
-
-        if (agent.contains("MSIE")) {
-            // IE浏览器
-            filenameEncoder = URLEncoder.encode(name, "utf-8");
-            filenameEncoder = filenameEncoder.replace("+", " ");
-        } else if (agent.contains("Firefox")) {
-            // 火狐浏览器
-            BASE64Encoder base64Encoder = new BASE64Encoder();
-            filenameEncoder = "=?utf-8?DTO?"
-                    + base64Encoder.encode(name.getBytes("utf-8")) + "?=";
-        } else {
-            // 其它浏览器
-            filenameEncoder = URLEncoder.encode(name, "utf-8");
-        }
-        return filenameEncoder;
-    }
+//    public static String getCharacterEncodingStr(HttpServletRequest request, String name) throws UnsupportedEncodingException {
+//        //获得请求头中的User-Agent
+//        String agent = request.getHeader("User-Agent");
+//        String filenameEncoder;
+//
+//        if (agent.contains("MSIE")) {
+//            // IE浏览器
+//            filenameEncoder = URLEncoder.encode(name, "utf-8");
+//            filenameEncoder = filenameEncoder.replace("+", " ");
+//        } else if (agent.contains("Firefox")) {
+//            // 火狐浏览器
+//            BASE64Encoder base64Encoder = new BASE64Encoder();
+//            filenameEncoder = "=?utf-8?DTO?"
+//                    + base64Encoder.encode(name.getBytes("utf-8")) + "?=";
+//        } else {
+//            // 其它浏览器
+//            filenameEncoder = URLEncoder.encode(name, "utf-8");
+//        }
+//        return filenameEncoder;
+//    }
 
     /**
      * 首字母变小写

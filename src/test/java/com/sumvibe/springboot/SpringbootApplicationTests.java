@@ -1,5 +1,5 @@
 package com.sumvibe.springboot;
-import com.sumvibe.springboot.dao.UserInfoDao;
+import com.sumvibe.springboot.mapper.UserInfoMapper;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.UUID;
 class SpringbootApplicationTests {
 
     @Autowired
-    private UserInfoDao userInfoDao;
+    private UserInfoMapper userInfoMapper;
 
 
 
@@ -34,23 +34,23 @@ class SpringbootApplicationTests {
             user.setId(s);
             users.add(user);
         }
-        int i = userInfoDao.batchAddUser(users);
+        int i = userInfoMapper.batchAddUser(users);
         log.info("插入mysql数据库结果i为：" + i);
     }
 
     @Test
     void delAllUsers() {
         // 先查出所有数据的ID
-        List<User> users = userInfoDao.getUsers();
+        List<User> users = userInfoMapper.getUsers();
         // 创建集合存储id
         ArrayList<String> ids = new ArrayList<>();
         for (User user : users) {
             ids.add(user.getId());
         }
-        int i = userInfoDao.batchDelUser(ids);
+        int i = userInfoMapper.batchDelUser(ids);
         log.info("删除了 " + i + "条数据！！");
         // 再次查询数据中用户若为空 则删除成功
-        List<User> users1 = userInfoDao.getUsers();
+        List<User> users1 = userInfoMapper.getUsers();
         if (users1.size() < 1) {
             log.info("清除了所有用户数据成功！");
         }
@@ -59,7 +59,7 @@ class SpringbootApplicationTests {
     @Test
     void getUserName() {
         String id = "2f07bae0008b430a9de72bf3eff94785";
-        String userName = userInfoDao.getUserName(id);
+        String userName = userInfoMapper.getUserName(id);
         System.out.println(userName);
     }
 
@@ -70,7 +70,7 @@ class SpringbootApplicationTests {
         user.setSex("男");
         user.setPhone("110");
         user.setAge(50);
-        int i = userInfoDao.addUser(user);
+        int i = userInfoMapper.addUser(user);
         System.out.println("单独插入一个用户结果："+i);
     }
 

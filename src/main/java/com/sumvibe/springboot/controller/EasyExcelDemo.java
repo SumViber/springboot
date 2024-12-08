@@ -3,6 +3,7 @@ package com.sumvibe.springboot.controller;
 import com.alibaba.excel.EasyExcel;
 import com.sumvibe.springboot.domain.UserDo;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,13 @@ public class EasyExcelDemo {
             list.add(userDo);
         }
         // 设置文件路径
+        String folderPath = "/Users/xuxufu/Desktop/excelFile";
         String filePath = "/Users/xuxufu/Desktop/excelFile/aaa.xlsx";
+        File file1 = new File(folderPath);
+        // 判断是否有该路径，没有就创建
+        if (!file1.exists()) {
+            file1.mkdirs();
+        }
         EasyExcel.write(filePath, UserDo.class).sheet("用户信息表").doWrite(list);
     }
 }

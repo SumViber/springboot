@@ -2,16 +2,11 @@ package com.sumvibe.springboot.controller;
 
 import com.sumvibe.springboot.domain.*;
 import com.sumvibe.springboot.service.UserInfoService;
-import com.sumvibe.springboot.utils.MailSplitUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.naming.Name;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,13 +15,23 @@ import java.util.stream.Collectors;
 @RestController
 public class UserInfoController {
 
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
+
+    public UserInfoController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     @ApiOperation("获取所有用户的基本信息")
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
-    public List<User> getUsers() throws Exception {
+    public List<User> getUsers(){
         return userInfoService.getUsers();
+    }
+
+    @RequestMapping(value = "/getMsg", method = RequestMethod.GET)
+    public String getMsg(){
+        Random random = new Random();
+        int i = random.nextInt(10000);
+        return i+" hello springboot!";
     }
 
     @ApiOperation("通过用户ID查询用户信息")
@@ -95,10 +100,7 @@ public class UserInfoController {
 
         try {
             String[] split = ids.split(",");
-            List<String> list = new ArrayList<>();
-            for (int i = 0; i < split.length; i++) {
-                list.add(split[i]);
-            }
+            List<String> list = new ArrayList<>(Arrays.asList(split));
             int i = userInfoService.batchDelUser(list);
             log.info("批量删除用户结果为：" + i);
             User userById = userInfoService.getUserById("1");
@@ -120,10 +122,10 @@ public class UserInfoController {
         List<User> users = userInfoService.getUsers();
         log.info("获取到用户的数量为：" + users.size());
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            list.add(users.get(i).getId());
+        for (User user : users) {
+            list.add(user.getId());
         }
-        log.info("删除的用户ID集合为："+list);
+        log.info("删除的用户ID集合为：{}", list);
         int i = 0;
         try {
             i = userInfoService.batchDelUser(list);
@@ -151,9 +153,6 @@ public class UserInfoController {
     }
 
     @ApiOperation("通过操作类型操作用户")
-    /**
-     * 批量新增用户数据
-     */
     @RequestMapping(value = "/pushUser", method = RequestMethod.POST)
     public DBResponse pushUser(@RequestBody UserVO userVO) {
         DBResponse db = new DBResponse(StatusCode.RET_ERROR, "插入失败");
@@ -171,15 +170,6 @@ public class UserInfoController {
             userDo.setAge(user.getAge());
             userDo.setSex(user.getSex());
             userDo.setPhone(user.getPhone());
-
-            if (StringUtils.isNoneBlank(user.getOpType())) {
-                if ("0".equals(user.getOpType())) {
-                    addList.add(userDo);
-                }
-                if ("1".equals(user.getOpType())) {
-                    delList.add(userDo);
-                }
-            }
         }
         // 新增数据
         if (!addList.isEmpty()) {
@@ -196,7 +186,7 @@ public class UserInfoController {
         if (!delList.isEmpty()) {
             int i = userInfoService.batchDelUsers(delList);
             if (i > 0) {
-                log.info("删除数据结果为：" + i);
+                log.info("删除数据结果为：{}",i);
                 db.setRetCode(StatusCode.RET_SUCCESS);
                 db.setRetMsg("删除成功");
             }
@@ -254,5 +244,4 @@ public class UserInfoController {
         log.info("返回前端结果为："+dbResponse);
         return dbResponse;
     }
-
 }

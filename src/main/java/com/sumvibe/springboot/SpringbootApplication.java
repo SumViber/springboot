@@ -8,9 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableAsync
 @SpringBootApplication
-@MapperScan(basePackages = "com.sumvibe.springboot.dao")
+@MapperScan(basePackages = "com.sumvibe.springboot.mapper")
 public class SpringbootApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringbootApplication.class, args);
     }

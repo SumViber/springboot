@@ -13,14 +13,17 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 public class ThreadPoolConfig {
-    @Bean(name = "threadPool01")
-    public ThreadPoolTaskExecutor threadPool01() {
+    @Bean(name = "threadPool")
+    public ThreadPoolTaskExecutor threadPool() {
+        int i = Runtime.getRuntime().availableProcessors();
+        System.out.println("可用的虚拟机核心数量为："+i);
+
         // 创建线程池任务执行器对象
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // 设置核心线程数量
-        executor.setCorePoolSize(8);
+        executor.setCorePoolSize(10);
         // 设置最大线程数量
-        executor.setMaxPoolSize(16);
+        executor.setMaxPoolSize(60);
         // 设置阻塞队列容量
         executor.setQueueCapacity(256);
         // 设置线程空闲时间，默认为 60 秒
@@ -28,7 +31,7 @@ public class ThreadPoolConfig {
         // 设置是否支持回收核心线程，默认为 false
         executor.setAllowCoreThreadTimeOut(false);
         // 设置线程名称前缀，若不设置则根据对象的 beanName 生成
-        executor.setThreadNamePrefix("threadPool01-");
+        executor.setThreadNamePrefix("threadPool-");
         // 设置线程池拒绝策略，默认为 AbortPolicy，即线程数量达到最大线程数量，且阻塞队列容量已满，再添加任务则抛出异常。
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         // 初始化

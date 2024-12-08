@@ -1,6 +1,6 @@
 package com.sumvibe.springboot.service.impl;
 
-import com.sumvibe.springboot.dao.UserInfoDao;
+import com.sumvibe.springboot.mapper.UserInfoMapper;
 import com.sumvibe.springboot.domain.User;
 import com.sumvibe.springboot.domain.UserDo;
 import com.sumvibe.springboot.service.UserInfoService;
@@ -20,36 +20,36 @@ import java.util.Map;
 public class UserInfoServiceImpl implements UserInfoService{
 
     @Autowired
-    private UserInfoDao userInfoDao;
+    private UserInfoMapper userInfoMapper;
 
     @Override
     public List<User> getUsers() {
-        List<User> users = userInfoDao.getUsers();
+        List<User> users = userInfoMapper.getUsers();
         return users;
     }
 
     @Override
     public User getUserById(String id) {
-        User user = userInfoDao.getUserById(id);
+        User user = userInfoMapper.getUserById(id);
         return user;
     }
 
     @Override
     public int addUser(User user) {
-        int i = userInfoDao.addUser(user);
+        int i = userInfoMapper.addUser(user);
         log.info("插入数据结果为："+i);
         return i;
     }
 
     @Override
     public int batchDelUser(List<String> ids) {
-        int i = userInfoDao.batchDelUser(ids);
+        int i = userInfoMapper.batchDelUser(ids);
         return i;
     }
 
     @Override
     public int delUserById(String id) {
-        return userInfoDao.delUserById(id);
+        return userInfoMapper.delUserById(id);
     }
 
     @Transactional(rollbackFor = ArithmeticException.class)
@@ -61,19 +61,19 @@ public class UserInfoServiceImpl implements UserInfoService{
         map.put("age", age);
         map.put("sex", sex);
         map.put("phone", phone);
-        int i = userInfoDao.updateUser(map);
+        int i = userInfoMapper.updateUser(map);
         return i;
     }
 
     @Override
     public int batchAddUser(List<UserDo> list) {
-        int result = userInfoDao.batchAddUser(list);
+        int result = userInfoMapper.batchAddUser(list);
         return result;
     }
 
     @Override
     public int batchDelUsers(List<UserDo> list) {
-        int i = userInfoDao.batchDelUsers(list);
+        int i = userInfoMapper.batchDelUsers(list);
         return i;
     }
 
@@ -91,7 +91,7 @@ public class UserInfoServiceImpl implements UserInfoService{
     public int batchUpdateUsers(String name, String phone, String ids) {
         // 处理ids
         List<String> list = Arrays.asList(ids.split(","));
-        return userInfoDao.batchUpdateUsers(name, phone, list);
+        return userInfoMapper.batchUpdateUsers(name, phone, list);
     }
 
 }
